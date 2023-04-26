@@ -16,11 +16,11 @@ public class Department {
     @Column(name = "department_name", nullable = false, length = 30)
     private String departmentName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "manager_id")
     private Employee manager;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
 
