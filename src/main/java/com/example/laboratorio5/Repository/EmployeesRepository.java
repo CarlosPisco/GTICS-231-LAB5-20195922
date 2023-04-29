@@ -70,10 +70,10 @@ public interface EmployeesRepository extends JpaRepository<Employee,Integer> {
     @Transactional
     @Modifying
     @Query(value="INSERT INTO employees\n" +
-            "(first_name, last_name, email, job_id, salary, manager_id, department_id,phone_number) \n" +
+            "(first_name, last_name, email, job_id, salary, manager_id, department_id,phone_number,password) \n" +
             "VALUES \n" +
-            "(?1,?2,?3,?4,?5,?6,?7,?8);",nativeQuery = true)
-    void guardaremployee2 (String first_name, String last_name,String email, String job_id, Integer salary, Integer manager_id , Integer department_id,String phone_number );
+            "(?1,?2,?3,?4,?5,?6,?7,?8,SHA2(?9,256));",nativeQuery = true)
+    void guardaremployee2 (String first_name, String last_name,String email, String job_id, Integer salary, Integer manager_id , Integer department_id,String phone_number,String pass );
 
 
     @Query(value="select j.job_title as `Puesto`, count(employee_id) as `NumEmpleados`,\n" +
@@ -86,5 +86,9 @@ public interface EmployeesRepository extends JpaRepository<Employee,Integer> {
             "        group by e.job_id",nativeQuery = true)
     List<ReporteDto> listaReporte();
 
+    /*@Transactional
+    @Modifying
+    @Query(nativeQuery = true,value="DELETE FROM employees WHERE (employee_id = ?1)")
+    void borrarEmpleado (String id);*/
 
 }

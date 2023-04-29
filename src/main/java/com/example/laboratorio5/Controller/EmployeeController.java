@@ -67,6 +67,7 @@ public class EmployeeController {
                                   @RequestParam("salary") Double salary,
                                   @RequestParam("managerid") Integer managerid,
                                   @RequestParam("departmentid") Integer departmentid,
+
                                   RedirectAttributes attr) {
 
         employeesRepository.guardaremployee(firstName, lastName, email, jobid, salary, managerid, departmentid, id);
@@ -97,10 +98,17 @@ public class EmployeeController {
     }
 
     @GetMapping("borrar")
-    public String borrarEmpleado(@RequestParam("id") Integer EmpId) {
+    public String borrarEmpleado(@RequestParam("id") int EmpId,RedirectAttributes attr) {
 
 
-        return "redirect:empleado/listar";
+        Optional<Employee> optional = employeesRepository.findById(EmpId);
+
+        if (optional.isPresent()) {
+            employeesRepository.deleteById(EmpId);
+        }
+        attr.addFlashAttribute("msg", "empleado borrado exitosamente");
+
+        return "redirect:/empleado/listar";
     }
 
 
@@ -126,11 +134,12 @@ public class EmployeeController {
                                   @RequestParam("managerid") Integer managerid,
                                   @RequestParam("departmentid") Integer departmentid,
                                   @RequestParam("phone_number") String phone_number,
+                                  @RequestParam("pass") String pass,
                                   RedirectAttributes attr) {
 
 
-        employeesRepository.guardaremployee2(firstName, lastName, email, jobid, salary, managerid, departmentid, phone_number);
-        attr.addFlashAttribute("msg", "empleado guardado");
+        employeesRepository.guardaremployee2(firstName, lastName, email, jobid, salary, managerid, departmentid, phone_number,pass);
+        attr.addFlashAttribute("msg", "empleado creado exitosamente ");
 
         return "redirect:/empleado/listar";
 
