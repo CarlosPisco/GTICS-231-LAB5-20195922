@@ -5,6 +5,7 @@ package com.example.laboratorio5.Repository;
 import com.example.laboratorio5.Entity.Employee;
 import com.example.laboratorio5.dto.EmployeeDto;
 import com.example.laboratorio5.dto.ManagerDto;
+import com.example.laboratorio5.dto.ReporteDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -75,7 +76,15 @@ public interface EmployeesRepository extends JpaRepository<Employee,Integer> {
     void guardaremployee2 (String first_name, String last_name,String email, String job_id, Integer salary, Integer manager_id , Integer department_id,String phone_number );
 
 
-
+    @Query(value="select j.job_title as `Puesto`, count(employee_id) as `NumEmpleados`,\n" +
+            "\t\tSUM(salary) as `SumaSalarios`,\n" +
+            "        MIN(salary) as `SueldoMinimo`,\n" +
+            "        MAX(salary) as `SueldoMaximo`,\n" +
+            "        truncate(avg(Salary),2) as `SueldoPromedio`\n" +
+            "        from employees e\n" +
+            "        inner join jobs j on j.job_id = e.job_id\n" +
+            "        group by e.job_id",nativeQuery = true)
+    List<ReporteDto> listaReporte();
 
 
 }
