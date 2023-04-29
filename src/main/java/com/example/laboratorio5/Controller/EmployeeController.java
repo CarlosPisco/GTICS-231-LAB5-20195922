@@ -133,12 +133,11 @@ public class EmployeeController {
                                   @RequestParam("salary") Integer salary,
                                   @RequestParam("managerid") Integer managerid,
                                   @RequestParam("departmentid") Integer departmentid,
-                                  @RequestParam("phone_number") String phone_number,
                                   @RequestParam("pass") String pass,
                                   RedirectAttributes attr) {
 
 
-        employeesRepository.guardaremployee2(firstName, lastName, email, jobid, salary, managerid, departmentid, phone_number,pass);
+        employeesRepository.guardaremployee2(firstName, lastName, email, jobid, salary, managerid, departmentid,pass);
         attr.addFlashAttribute("msg", "empleado creado exitosamente ");
 
         return "redirect:/empleado/listar";
