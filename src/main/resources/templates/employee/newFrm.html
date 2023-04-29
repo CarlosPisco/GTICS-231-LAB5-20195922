@@ -13,7 +13,7 @@
     <div th:replace="~{fragmentos/pestanas.html :: menu}"></div>
 
     <h2>Nuevo Empleado</h2><hr />
-    <form method="post" th:action="@{'/empleado/nuevo'}">
+    <form method="post" th:action="@{'/empleado/guardar2'}">
 
 
         <input  name="id" type="hidden"/>
@@ -33,9 +33,17 @@
 
         <div class="form-group">
 
-            <label> Correo Electronico</label>
-            <input  type="text" name="email" class="form-control">
+            <div class="form-group col-6">
 
+                <label> Correo Electronico</label>
+                <input  type="text" name="email" class="form-control">
+            </div>
+
+            <div class="form-group col-6">
+
+                <label> Telefono</label>
+                <input  type="text" name="phone_number" class="form-control">
+            </div>
         </div>
 
         <div class="row">
@@ -52,7 +60,7 @@
             <div class="form-group col-6">
 
                 <label> Sueldo</label>
-                <input th:value="${employee.getSalary()}" type="text" name="salary" class="form-control">
+                <input  type="text" name="salary" class="form-control">
             </div>
         </div>
 

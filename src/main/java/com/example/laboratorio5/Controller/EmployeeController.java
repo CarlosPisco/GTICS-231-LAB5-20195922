@@ -44,10 +44,16 @@ public class EmployeeController {
         return "employee/listar";
     }
     @GetMapping("nuevo")
-    public String nuevoEmployeeForm( ) {
+    public String nuevoEmployeeForm( Model model) {
 
+        List<Job> listaTrabajos = jobRepository.findAll();
+        List<Department> listaDepartamentos = departmentRepository.findAll();
+        List<ManagerDto> listaManagers = employeesRepository.buscarManager();
+        model.addAttribute("listaTrabajos",listaTrabajos);
+        model.addAttribute("listaDepartamentos",listaDepartamentos);
+        model.addAttribute("listaManagers",listaManagers);
 
-        return "employee/newForm";
+        return "employee/newFrm";
     }
 
     @PostMapping("guardar")
@@ -111,6 +117,28 @@ public class EmployeeController {
 
         return "employee/listar";
     }
+
+
+    @PostMapping("/guardar2")
+    public String guardarEmployee(@RequestParam("firstName") String firstName,
+                                  @RequestParam("lastName") String lastName,
+                                  @RequestParam("email") String email,
+                                  @RequestParam("jobid") String jobid,
+                                  @RequestParam("salary") Integer salary,
+                                  @RequestParam("managerid") Integer managerid,
+                                  @RequestParam("departmentid") Integer departmentid,
+                                  @RequestParam("phone_number") String phone_number,
+                                  RedirectAttributes attr){
+
+
+        employeesRepository.guardaremployee2(firstName,lastName,email,jobid,salary,managerid,departmentid,phone_number);
+        attr.addFlashAttribute("msg","empleado guardado");
+
+        return "redirect:/empleado/listar";
+
+    }
+
+
 
 
 }

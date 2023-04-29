@@ -30,17 +30,26 @@ public interface EmployeesRepository extends JpaRepository<Employee,Integer> {
             "\tinner join locations l on l.location_id = d.location_id", nativeQuery = true)
     List<EmployeeDto> listarEmpleados();
 
-    @Query(value = "select e.employee_id as `id`,\n" +
-            "    e.first_name as `nombre`,\n" +
-            "\t\t\te.last_name as `apellido`,\n" +
-            "\t\t\tj.job_title as `puesto`,\n" +
-            "\t\t\td.department_name as `departamento`,\n" +
-            "\t\t\tl.city as `ciudad`\n" +
-            "\t from employees e\n" +
-            "\t inner join jobs j on j.job_id = e.job_id\n" +
-            "\tinner join departments d on d.department_id = e.department_id\n" +
-            "\tinner join locations l on l.location_id = d.location_id\n" +
-            "    where LOWER(e.first_name) like %?1%", nativeQuery = true)
+    @Query(value = "select\n" +
+            "        e.employee_id as `id`,\n" +
+            "        e.first_name as `nombre`,\n" +
+            "        e.last_name as `apellido`,\n" +
+            "        j.job_title as `puesto`,\n" +
+            "        d.department_name as `departamento`,\n" +
+            "        l.city as `ciudad`   \n" +
+            "    from\n" +
+            "        employees e   \n" +
+            "    inner join\n" +
+            "        jobs j \n" +
+            "            on j.job_id = e.job_id  \n" +
+            "    inner join\n" +
+            "        departments d \n" +
+            "            on d.department_id = e.department_id  \n" +
+            "    inner join\n" +
+            "        locations l \n" +
+            "            on l.location_id = d.location_id     \n" +
+            "    where\n" +
+            "        LOWER(e.first_name) like %?1% or LOWER(e.last_name) like %?1% or LOWER(j.job_title) like %?1% or LOWER(d.department_name) like %?1%", nativeQuery = true)
     List<EmployeeDto> buscarEmpleado(String textoBuscar);
 
 
@@ -56,5 +65,17 @@ public interface EmployeesRepository extends JpaRepository<Employee,Integer> {
             "SET first_name = ?1, Last_name = ?2, email = ?3, job_id = ?4 , salary=?5, manager_id = ?6,department_id = ?7\n" +
             "WHERE employee_id = ?8", nativeQuery = true)
     void guardaremployee(String firstName, String lastName,String email, String jobid, Double salary,Integer managerid, Integer departmentid, Integer employeeid);
+
+    @Transactional
+    @Modifying
+    @Query(value="INSERT INTO employees\n" +
+            "(first_name, last_name, email, job_id, salary, manager_id, department_id,phone_number) \n" +
+            "VALUES \n" +
+            "(?1,?2,?3,?4,?5,?6,?7,?8);",nativeQuery = true)
+    void guardaremployee2 (String first_name, String last_name,String email, String job_id, Integer salary, Integer manager_id , Integer department_id,String phone_number );
+
+
+
+
 
 }
