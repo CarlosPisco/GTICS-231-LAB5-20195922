@@ -163,7 +163,10 @@ public class EmployeeController {
         return "reporte/Tentativa";
     }
 
-
+    @GetMapping("index")
+    public String inicial(){
+        return "inicial";
+    }
 
 
 
