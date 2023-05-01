@@ -145,12 +145,9 @@ public class EmployeeController {
 
     }
 
-    @GetMapping("menureportes")
-    public String menuReportes() {
-        return "reporte/dashboard";
-    }
 
-    @GetMapping("reporte")
+
+    @GetMapping("menureportes")
     public String reportesLista(Model model) {
 
         List<ReporteDto> listaReportes = employeesRepository.listaReporte();

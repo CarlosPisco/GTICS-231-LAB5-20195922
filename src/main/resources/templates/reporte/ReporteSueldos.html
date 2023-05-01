@@ -12,6 +12,33 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
+  <style>
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .menu-lateral {
+      float: left;
+      width: 200px;
+      height: 100%;
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      padding: 20px;
+    }
+
+    .tabla-reporte {
+      float: right;
+      /*width: calc(100% - 200px);
+      /* Restamos 200px al ancho total para dejar espacio al menú */
+      margin-left: 20px;
+      /* Agregamos un margen a la izquierda para separar la tabla del menú */
+    }
+  </style>
+
   <title>Reporte - Dashboards</title>
 </head>
 <body>
@@ -22,7 +49,12 @@
 
 <div class="container">
   <h1>Reporte - Dashboards</h1>
-  <table class="table table-striped">
+  <div class="menu-lateral" th:replace="~{fragmentos/menu.html :: lateral}"></div>
+
+
+<div class="tabla-reporte">
+
+  <table class="table table-striped" >
     <thead>
     <tr>
       <th>#</th>
@@ -51,7 +83,7 @@
 
     </tbody>
   </table>
-
+</div>
 
 </div>
 
